@@ -3,7 +3,7 @@
 ## What?
 
 Solsearch is a tool for semantically searching over Solidity code. Search queries can be written in
-a custom Domain Specific Language (DSL) that closely resembles the Abstract Syntax Tree (AST)
+a custom Domain Specific Language (DSL) that closely resembles the [Abstract Syntax Tree (AST)](https://solidity-ast.netlify.app/)
 representation that's used internally by the Solidity compiler.
 
 ## Why?
@@ -22,6 +22,8 @@ There are three different use-cases for the tool:
 4. Language designers: when existing features for solidity gets updated, the compiler team often
    needs to understand the impact of the changes. This search tool can be used to precisely located
    open-source contracts that use certain language patterns.
+5. *Fun*: I wanted to see how to design a query language to search over Solidity's AST and how
+   powerful such queries can get.
 
 ## What's built at ETHGlobal Tokyo?
 
@@ -116,6 +118,33 @@ severity: 'informational'
 
 ```bash
 cargo run -- --help
+```
+
+```txt
+Usage: solsearch <COMMAND>
+
+Commands:
+  pretty-print  
+  search        
+  help          Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
+```
+
+```bash
+cargo run -- search --help
+```
+
+```txt
+Usage: solsearch search <PATH_AST> <PATH_RULE>
+
+Arguments:
+  <PATH_AST>   The path to a file with Solidity's AST represenation in JSON format
+  <PATH_RULE>  The path to a rule written in YAML
+
+Options:
+  -h, --help  Print help
 ```
 
 ```bash

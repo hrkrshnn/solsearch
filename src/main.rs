@@ -18,14 +18,14 @@ struct Cli {
 enum Subcommands {
     #[clap(name = "pretty-print")]
     PrettyPrint {
-        #[clap(help = "A JSON file to solc's AST")]
+        #[clap(help = "The path to a file with Solidity's AST representation in JSON format")]
         path: String,
     },
     #[clap(name = "search")]
     Search {
-        #[clap(help = "A JSON file to solc's AST")]
+        #[clap(help = "The path to a file with Solidity's AST represenation in JSON format")]
         path_ast: String,
-        #[clap(help = "A JSON file to YAML rule")]
+        #[clap(help = "The path to a rule written in YAML")]
         path_rule: String,
     },
 }
