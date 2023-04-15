@@ -20,7 +20,7 @@ impl FunctionCallMatchingEngine {
 
     pub fn match_source_unit(self, ast: ast::SourceUnit) -> Result<()> {
         let mut context = ast::SourceUnitContext {
-            source_units: &vec![ast.clone()],
+            source_units: &[ast.clone()],
             current_source_unit: &ast,
         };
         let visitors: Vec<Box<dyn AstVisitor>> = vec![Box::new(self)];
@@ -38,9 +38,9 @@ impl FunctionCallMatchingEngine {
 }
 
 impl AstVisitor for FunctionCallMatchingEngine {
-    fn visit_function_call<'a, 'b>(
+    fn visit_function_call(
         &mut self,
-        context: &mut ast::FunctionCallContext<'a, 'b>,
+        context: &mut ast::FunctionCallContext<'_, '_>,
     ) -> io::Result<()> {
         let mut matches = true;
         match &self.rule.pattern {
@@ -76,7 +76,7 @@ fn non_pure_call() -> Result<()> {
     .unwrap();
     println!("{source_unit:#?}");
     let mut context = ast::SourceUnitContext {
-        source_units: &vec![],
+        source_units: &[],
         current_source_unit: &source_unit,
     };
     let function_call_matching_engine = FunctionCallMatchingEngine::new(rule);
