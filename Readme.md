@@ -8,7 +8,7 @@ representation that's used internally by the Solidity compiler.
 
 ## Why?
 
-There are three different use-cases for the tool:
+Here are some use cases for solsearch:
 
 1. Highly customizable linters: the DSL can encode simple linting rules.
 2. Highly extensible static analysis tools: the DSL can be used to write rules on the fly. Current
@@ -20,7 +20,7 @@ There are three different use-cases for the tool:
    - When a new security bug is found, this search tool can be used to query against all verified
      contracts on chain to find out affected contracts.
 4. Language designers: when existing features for solidity gets updated, the compiler team often
-   needs to understand the impact of the changes. This search tool can be used to precisely located
+   needs to understand the impact of the changes. This search tool can be used to precisely locate
    open-source contracts that use certain language patterns.
 5. *Fun*: I wanted to see how to design a query language to search over Solidity's AST and how
    powerful such queries can get.
@@ -52,12 +52,12 @@ contract C {
 This rule can be expressed by the following script:
 
 ```yaml
-id: 'low-level-call'
+id: 'public-state-variable-underscore'
 message: 'Low level calls bad'
 metadata:
-  references: ['https://docs.soliditylang.org/en/latest/']
-  category: 'low-level'
-  tags: ['low-level']
+  references: ['https://docs.soliditylang.org/en/v0.8.19/style-guide.html']
+  category: 'lint'
+  tags: ['coding-style', 'state-variables']
 pattern:
   nodeType: VariableDeclaration
   stateVariable: true
@@ -277,3 +277,7 @@ FunctionCall {
   2. The matching engine should display the original lines affected by solidity, not just the internal representation.
 - **UX**: Work directly with frameworks like foundry. Searching for patterns should be as simple as `solsearch --pattern-folder /file/to/patterns .` inside a foundry project.
 - **DB**: Easily query against all verified contracts on Etherscan / Sourcify, by building a cache of the compiled AST.
+
+Note: the code is quite messy, and to properly do this, a major rewrite of both the DSL and the
+matching engine is needed. Perhaps even writing the visitor pattern directly.
+

@@ -1,3 +1,4 @@
+# Example of a rule written in the Domain Specific Language (DSL)
 id: 'low-level-call'
 message: 'Low level calls bad'
 metadata:

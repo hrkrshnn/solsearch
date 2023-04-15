@@ -1,3 +1,7 @@
+# Example of a query that can find a non-trivial detail.
+# It can search Solidity programs for function calls
+# that are not-pure. This includes calls to internal functions,
+# external functions and core-functions defined in the language!
 id: 'non-pure-call'
 message: "Found a call to a function that's not pure"
 metadata:

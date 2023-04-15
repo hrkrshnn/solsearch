@@ -1,0 +1,14 @@
+# Example of a linting rule entirely written using the Domain Specific Language
+id: 'public-state-variable-underscore'
+message: 'Low level calls bad'
+metadata:
+  references: ['https://docs.soliditylang.org/en/v0.8.19/style-guide.html']
+  category: 'lint'
+  tags: ['coding-style', 'state-variables']
+pattern:
+  nodeType: VariableDeclaration
+  stateVariable: true
+  # A regex rule that matches names that start with _
+  name: "_*"
+  visibility: public
+severity: 'lint'
