@@ -10,4 +10,6 @@ clap = { version = "4.2.2", features = ["derive"] }
 eyre = "0.6.8"
 serde = { version = "1.0.160", features = ["derive"] }
 serde_json = "1.0.96"
+serde_yaml = "0.9.21"
 solidity = { git = "https://github.com/hrkrshnn/solidity-rs.git", branch = "lib", package = "solidity" }
+eth-lang-utils = { git = "https://github.com/hrkrshnn/solidity-rs.git", branch = "lib", package = "eth-lang-utils" }

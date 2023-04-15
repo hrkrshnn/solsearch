@@ -1,0 +1,22 @@
+id: ''
+message: ''
+metadata:
+  references: []
+  category: ''
+  tags: []
+pattern: !Expression
+  hexValue: null
+  value: null
+  subdenomination: null
+  kind: number
+  argumentTypes: null
+  isConstant: true
+  isLValue: true
+  isPure: true
+  lValueRequested: false
+  typeDescriptions:
+    typeIdentifier: null
+    typeString: null
+  src: 1:1:1
+  id: 1
+severity: ''

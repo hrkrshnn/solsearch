@@ -3,6 +3,7 @@ use eyre::Result;
 use solidity::ast::SourceUnit;
 use std::fs::File;
 use std::io::BufReader;
+mod dsl;
 
 #[derive(Parser, Debug)]
 struct Cli {

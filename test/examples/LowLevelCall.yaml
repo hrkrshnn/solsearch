@@ -1,0 +1,15 @@
+id: 'low-level-call'
+message: 'Low level calls bad'
+metadata:
+  references: ['https://docs.soliditylang.org/en/latest/']
+  category: 'low-level'
+  tags: ['low-level']
+pattern:
+  nodeType: Expression
+  expression:
+    functionCall:
+      expression:
+        memberAccess:
+          memberName: 'call'
+      id: 24
+severity: 'informational'
