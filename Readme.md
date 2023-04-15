@@ -17,8 +17,8 @@ There are three different use-cases for the tool:
 3. Security research:
    - A researcher can build their own internal set of rules, for common vulnerabilities and patterns
      that they notice, and run it againt solidity contracts.
-  - When a new security bug is found, this search tool can be used to query against all verified
-    contracts on chain to find out affected contracts.
+   - When a new security bug is found, this search tool can be used to query against all verified
+     contracts on chain to find out affected contracts.
 4. Language designers: when existing features for solidity gets updated, the compiler team often
    needs to understand the impact of the changes. This search tool can be used to precisely located
    open-source contracts that use certain language patterns.
@@ -28,14 +28,16 @@ There are three different use-cases for the tool:
 The tool is currently an MVP that currently has the following features:
 
 1. A simple design for the DSL
-2. Can parse the DSL built in YAML.
-3. The DSL currenly only supports expressions (FunctionCalls and MemberAccess)
-4. The matching engine currently only supports FunctionCalls.
-
+2. Can parse the DSL written in YAML.
+3. The DSL currently only supports expressions (`FunctionCalls` and `MemberAccess`)
+4. The matching engine currently only supports `FunctionCalls`.
 
 ## DSL
 
 ### Example: linting rule for style of variables
+
+<details>
+<summary> Click for an example </summary>
 
 Here's an example of a bad naming convention.
 ```solidity
@@ -62,8 +64,12 @@ pattern:
   visibility: public
 severity: 'lint'
 ```
+</details>
 
 ### Example: usage of `delegatecalls`
+
+<details>
+<summary> Click for an example </summary>
 
 ```yaml
 id: 'low-level-call'
@@ -83,6 +89,8 @@ severity: 'lint'
 ```
 
 TODO: extend to the rule to show a linting rule where it's a `delegatecall` to a contract that's supplied in a `public` / `external` function. (This would require extending the DSL to have some notion of equality between two sub-patterns).
+
+</details>
 
 ### Example: searching for non-pure function calls
 
@@ -119,6 +127,9 @@ Cargo run -- search test/examples/raw_call.json test/examples/NonPureCalls.yaml
 # In the future, this can be the lines of code from the original contract
 # See `src` field, which already gives the line numbers.
 ```
+
+<details>
+<summary> Click for the output </summary>
 
 ```txt
 Found a match.
@@ -224,6 +235,8 @@ FunctionCall {
     id: 9,
 }
 ```
+
+</details>
 
 # Future plans
 
