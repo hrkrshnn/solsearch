@@ -1,19 +1,16 @@
 use eth_lang_utils::ast::*;
-use eyre::Result;
 use serde::{Deserialize, Serialize};
-use serde_yaml;
 use solidity::ast::*;
-use std::fs::File;
 
-#[derive(Debug, Serialize, Deserialize, Default)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone)]
 #[serde(rename_all = "camelCase")]
-struct Rule {
-    id: String,
-    message: String,
-    metadata: Metadata,
-    pattern: Pattern,
+pub struct Rule {
+    pub id: String,
+    pub message: String,
+    pub metadata: Metadata,
+    pub pattern: Pattern,
     // TODO convert to enum
-    severity: String,
+    pub severity: String,
 }
 
 // Manually define the Expression template
@@ -40,7 +37,7 @@ pub enum Pattern {
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ExpressionWrapper {
-    expression: Expression,
+    pub expression: Expression,
 }
 
 impl Default for Pattern {
@@ -85,7 +82,7 @@ pub struct MemberAccessRule {
     pub id: Option<NodeID>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Default)]
+#[derive(Clone, Debug, Serialize, Deserialize, Default)]
 pub struct Metadata {
     references: Vec<String>,
     // TODO an enum of categories
@@ -94,7 +91,7 @@ pub struct Metadata {
 }
 
 #[test]
-fn serialize() -> Result<()> {
+fn serialize() -> eyre::Result<()> {
     let rule = Rule::default();
     let out = serde_yaml::to_string(&rule)?;
     println!("{out}");
@@ -102,9 +99,9 @@ fn serialize() -> Result<()> {
 }
 
 #[test]
-fn deserialize() -> Result<()> {
+fn deserialize() -> eyre::Result<()> {
     let example = "test/examples/LowLevelCall.yaml";
-    let file = File::open(example)?;
+    let file = std::fs::File::open(example)?;
     let _rule: Rule = serde_yaml::from_reader(file)?;
 
     // TODO write a visitor pattern for matching memberName

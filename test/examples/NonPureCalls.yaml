@@ -1,0 +1,12 @@
+id: 'non-pure-call'
+message: "Found a call to a function that's not pure"
+metadata:
+  references: ['https://docs.soliditylang.org/en/latest/']
+  category: 'informational'
+  tags: ['informational', 'function calls']
+pattern:
+  nodeType: Expression
+  expression:
+    functionCall:
+      isPure: false
+severity: 'informational'

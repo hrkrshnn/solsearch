@@ -1,9 +1,12 @@
+use crate::engine::FunctionCallMatchingEngine;
 use clap::{Parser, Subcommand};
 use eyre::Result;
-use solidity::ast::SourceUnit;
+use solidity::ast::*;
 use std::fs::File;
 use std::io::BufReader;
 mod dsl;
+mod engine;
+use dsl::Rule;
 
 #[derive(Parser, Debug)]
 struct Cli {
@@ -18,20 +21,37 @@ enum Subcommands {
         #[clap(help = "A JSON file to solc's AST")]
         path: String,
     },
+    #[clap(name = "search")]
+    Search {
+        #[clap(help = "A JSON file to solc's AST")]
+        path_ast: String,
+        #[clap(help = "A JSON file to YAML rule")]
+        path_rule: String,
+    },
 }
 
 fn main() -> Result<()> {
     let opts = Cli::parse();
-    println!("{opts:?}");
-
     match opts.sub {
         Subcommands::PrettyPrint { path } => pretty_print(path)?,
+        Subcommands::Search {
+            path_ast,
+            path_rule,
+        } => search(path_ast, path_rule)?,
     }
 
     Ok(())
 }
 
-// TODO move into a separate file later
+fn search(path_ast: String, path_rule: String) -> Result<()> {
+    let rule: Rule = serde_yaml::from_reader(File::open(path_rule)?)?;
+    let source_unit: SourceUnit = serde_json::from_reader(BufReader::new(File::open(path_ast)?))?;
+    let function_call_matching_engine = FunctionCallMatchingEngine::new(rule);
+    function_call_matching_engine.match_source_unit(source_unit)?;
+    Ok(())
+}
+
+// TODO move into a separate
 fn pretty_print(path: String) -> Result<()> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
